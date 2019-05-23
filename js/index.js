@@ -14,6 +14,7 @@ var buttonRock = document.getElementById('rock');
 var buttonScissors = document.getElementById('scissors');
 var buttonReset = document.getElementById('reset');
 var roundsToWin;
+var parsedNumber;
 
 var buttonsDisabled = function () {
 
@@ -59,7 +60,7 @@ var addText = function(text, target) {
   };
 
 var addToScore = function(player) {
-  console.log(window);
+  // console.log(window);
   window[player]++;
   addText(userScore + ':' + computerScore, result);
   roundNumber++;
