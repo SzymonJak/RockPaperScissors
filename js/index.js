@@ -3,8 +3,8 @@
 var paper = 1;
 var rock = 2;
 var scissors = 3;
-var computerScore = 0;
-var userScore = 0;
+// var computerScore = 0;
+// var userScore = 0;
 var roundNumber = 0;
 var newGameButton = document.getElementById('newGame');
 var output = document.getElementById('output');
@@ -37,13 +37,29 @@ var buttonsEnabled = function() {
   buttonScissors.classList.remove('grey');
 };
 
+var param = {
+  computerScore: 0,
+  userScore: 0
+};
+
+// var params = {
+//   parsedNumber: '',
+//   roundsToWin: '',
+//   paper: 1,
+//   rock: 2,
+//   scissors: 3,
+//   computerScore: 0,
+//   userScore: 0,
+//   roundNumber: 0
+// };
+
 var resetThis = function() {
   output.innerHTML = "";
   result.innerHTML = "";
   thisGame.innerHTML = "";
   roundNumber = 0;
-  userScore = 0;
-  computerScore = 0;
+  param.userScore = 0;
+  param.computerScore = 0;
   roundsToWin = 0;
   parsedNumber = 0;
   buttonsDisabled();
@@ -60,17 +76,17 @@ var addText = function(text, target) {
   };
 
 var addToScore = function(player) {
-  // console.log(window);
+  //console.log(window);
   window[player]++;
-  addText(userScore + ':' + computerScore, result);
+  addText(param['userScore'] + ':' + param['computerScore'], result);
   roundNumber++;
   
-  if (userScore == parsedNumber) {
+  if (param.userScore == parsedNumber) {
     addText('You WON the entire game!', thisGame);
     buttonsDisabled();
   }  
   
-  if (computerScore == parsedNumber) {
+  if (param.computerScore == parsedNumber) {
     addText('You LOST', thisGame);
     buttonsDisabled();
   }
@@ -82,12 +98,12 @@ var playPaper = function() {
   
   if (drawNumReturn == rock) {
     output.insertAdjacentHTML('afterBegin', 'YOU picked PAPER<br> Computer picked ROCK<br> Result: You WON <br><br>');
-    addToScore('userScore');
+    addToScore(param['userScore']);
   }
   
   if (drawNumReturn == scissors) {
     output.insertAdjacentHTML('afterBegin', 'YOU picked PAPER<br> Computer picked SCISSORS<br> Result: You LOST <br><br>');
-    addToScore('computerScore');
+    addToScore(param['computerScore']);
   }
   
   else {
@@ -101,12 +117,12 @@ var playRock = function() {
   
   if (drawNumReturn == scissors) {
     output.insertAdjacentHTML('afterBegin', 'YOU picked ROCK<br> Computer picked SCISSORS<br> Result: You WON <br><br>');
-    addToScore('userScore');
+    addToScore(param['userScore']);
   }
   
   if (drawNumReturn == paper) {
     output.insertAdjacentHTML('afterBegin', 'YOU picked ROCK<br> Computer picked PAPER<br> Result: You LOST <br><br>');
-    addToScore('computerScore');
+    addToScore(param['computerScore']);
   }
   
   else {
@@ -120,12 +136,12 @@ var playScissors = function() {
   
   if (drawNumReturn == paper) {
     output.insertAdjacentHTML('afterBegin', 'YOU picked SCISSORS<br> Computer picked PAPER<br> Result: You WON <br><br>');
-    addToScore('userScore');
+    addToScore(param['userScore']);
   }
   
   if (drawNumReturn == rock) {
     output.insertAdjacentHTML('afterBegin', 'YOU picked SCISSORS<br> Computer picked ROCK<br> Result: You LOST <br><br>');
-    addToScore('computerScore');
+    addToScore(param['computerScore']);
   }
   
   else {
@@ -144,11 +160,34 @@ var finalResult = function () {
   }
 };
 
+var selectButton = function(event) {
+  document.querySelector(event.target.id);
+  if (event.target.id == 'paper'){
+    playPaper();
+    return;
+  }
+  if (event.target.id == 'rock'){
+    playRock();
+    return;
+  } else {
+    playScissors();
+  }
+};
+
+var yourMove = function() {
+var gameButtons = document.querySelectorAll('.player-move');
+for (var i = 0; i < gameButtons.length; i++) {
+  console.log(event);
+  gameButtons[i].addEventListener('click', selectButton);
+}
+};
+
 buttonsDisabled();
 buttonReset.addEventListener('click', resetThis);
-buttonPaper.addEventListener('click', playPaper);
-buttonRock.addEventListener('click', playRock);
-buttonScissors.addEventListener('click', playScissors);
+yourMove();
+// buttonPaper.addEventListener('click', playPaper);
+// buttonRock.addEventListener('click', playRock);
+// buttonScissors.addEventListener('click', playScissors);
 newGameButton.addEventListener('click', function () {
   resetThis();
   buttonsEnabled();
