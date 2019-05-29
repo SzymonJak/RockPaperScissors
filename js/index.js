@@ -16,6 +16,11 @@ var buttonReset = document.getElementById('reset');
 var roundsToWin;
 var parsedNumber;
 
+var param = {
+  computerScore: 0,
+  userScore: 0
+};
+
 var buttonsDisabled = function () {
 
   buttonPaper.disabled = true;
@@ -35,11 +40,6 @@ var buttonsEnabled = function() {
   buttonPaper.classList.remove('grey');
   buttonRock.classList.remove('grey');
   buttonScissors.classList.remove('grey');
-};
-
-var param = {
-  computerScore: 0,
-  userScore: 0
 };
 
 // var params = {
@@ -76,10 +76,12 @@ var addText = function(text, target) {
   };
 
 var addToScore = function(player) {
-  //console.log(window);
+  // console.log(window);
   window[player]++;
-  addText(param['userScore'] + ':' + param['computerScore'], result);
+  addText(param['userScore'] + ':' + param.computerScore, result);
   roundNumber++;
+  console.log(player);
+  console.log(param.userScore);
   
   if (param.userScore == parsedNumber) {
     addText('You WON the entire game!', thisGame);
@@ -98,12 +100,12 @@ var playPaper = function() {
   
   if (drawNumReturn == rock) {
     output.insertAdjacentHTML('afterBegin', 'YOU picked PAPER<br> Computer picked ROCK<br> Result: You WON <br><br>');
-    addToScore(param['userScore']);
+    addToScore('param.userScore');
   }
   
   if (drawNumReturn == scissors) {
     output.insertAdjacentHTML('afterBegin', 'YOU picked PAPER<br> Computer picked SCISSORS<br> Result: You LOST <br><br>');
-    addToScore(param['computerScore']);
+    addToScore('param.computerScore');
   }
   
   else {
@@ -117,12 +119,12 @@ var playRock = function() {
   
   if (drawNumReturn == scissors) {
     output.insertAdjacentHTML('afterBegin', 'YOU picked ROCK<br> Computer picked SCISSORS<br> Result: You WON <br><br>');
-    addToScore(param['userScore']);
+    addToScore('param.userScore');
   }
   
   if (drawNumReturn == paper) {
     output.insertAdjacentHTML('afterBegin', 'YOU picked ROCK<br> Computer picked PAPER<br> Result: You LOST <br><br>');
-    addToScore(param['computerScore']);
+    addToScore('param.computerScore');
   }
   
   else {
@@ -136,12 +138,12 @@ var playScissors = function() {
   
   if (drawNumReturn == paper) {
     output.insertAdjacentHTML('afterBegin', 'YOU picked SCISSORS<br> Computer picked PAPER<br> Result: You WON <br><br>');
-    addToScore(param['userScore']);
+    addToScore('param.userScore');
   }
   
   if (drawNumReturn == rock) {
     output.insertAdjacentHTML('afterBegin', 'YOU picked SCISSORS<br> Computer picked ROCK<br> Result: You LOST <br><br>');
-    addToScore(param['computerScore']);
+    addToScore('param.computerScore');
   }
   
   else {
@@ -177,7 +179,7 @@ var selectButton = function(event) {
 var yourMove = function() {
 var gameButtons = document.querySelectorAll('.player-move');
 for (var i = 0; i < gameButtons.length; i++) {
-  console.log(event);
+  // console.log(event);
   gameButtons[i].addEventListener('click', selectButton);
 }
 };
